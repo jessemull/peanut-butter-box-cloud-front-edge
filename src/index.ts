@@ -1,4 +1,4 @@
-const hasExtension = /(.+)\.[a-zA-Z0-9]{2,5}$/;
+const hasExtension = /(.+)\.[a-zA-Z0-9]{2,5}$/
 
 export interface Request {
   uri: string
