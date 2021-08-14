@@ -1,0 +1,21 @@
+service: peanut-butter-box-cloud-front-edge
+  
+configValidationMode: error
+  
+provider:
+  name: aws
+  runtime: nodejs12.x
+  stage: dev
+  region: us-east-1
+  lambdaHashingVersion: 20201221
+    
+functions:
+  myLambdaAtEdge:
+    handler: src/index.handler
+    events:
+      - cloudFront:
+          eventType: origin-request
+          origin: https://d2yd08hpll02kl.cloudfront.net
+
+plugins:
+  - serverless-plugin-typescript
