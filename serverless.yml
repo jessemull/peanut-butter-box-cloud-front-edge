@@ -10,12 +10,27 @@ provider:
   lambdaHashingVersion: 20201221
     
 functions:
-  myLambdaAtEdge:
+  ui-gateway-edge:
     handler: src/index.handler
     events:
-      - cloudFront:
+      - preExistingCloudFront:
+          distributionId: E2H9UFCQVN4CUB
           eventType: origin-request
-          origin: https://d2yd08hpll02kl.cloudfront.net
-
+          pathPattern: '*'
+          includeBody: true
 plugins:
+  - serverless-lambda-edge-pre-existing-cloudfront
   - serverless-plugin-typescript
+
+resources:
+  Resources:
+    IamRoleLambdaExecution:
+      Type: "AWS::IAM::Role"
+      Properties:
+        AssumeRolePolicyDocument:
+          Statement: 
+            - Effect: Allow
+              Principal: 
+                Service:
+                  - lambda.amazonaws.com
+                  - edgelambda.amazonaws.com
